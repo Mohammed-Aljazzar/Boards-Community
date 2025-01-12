@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title%} {{board.name}} {%endblock title%}
+{% block breadcrumb%}
+        <li class="breadcrumb-item active" style="margin-left: 10px;"><a href="{% url 'boards:home'%}" style="text-decoration: none;">Boards</a></li>
+        <li class="breadcrumb-item active">{{board.name}}</li>
+{%endblock%}
+{% block content%}
+        <a href="{% url 'boards:new_topic' board.pk %}" class="btn btn-success mb-3">New Topic</a>
+        <table class="table table-hover table-bordered">
+                <thead class="table-dark">
+                        <tr>
+                             <th>Topic</th>   
+                             <th>Created By</th>   
+                             <th>Posts</th>   
+                             <th>Views</th>   
+                             <th>Created at</th>   
+                             <th>Updated at</th>   
+                        </tr>
+                </thead>
+                <tbody>
+                        {% for topic in topics %}
+                        <tr>
+                           <td><a href="{% url 'boards:topic_posts' board.pk topic.pk %}">{{topic.subject}}</a></td>
+                           <td>{{topic.created_by.username}}</td>
+                           <td>{{topic.comments}}</td>
+                           <td>{{topic.views}}</td>
+                           <td>{{topic.created_dt}}</td>
+                           <td>{{topic.updated_dt}}</td>
+                        </tr>
+                        {% endfor%}
+                </tbody>
+
+        </table>
+        <div class="text-center d-flex">
+
+        
+        <ul class="pagination" style=" justify-content: center; flex: auto;">
+                
+                {% if topics.has_previous %}
+                        <li class="page-item">
+                                <a href="?page={{topics.previous_page_number}}" class="page-link">Previous</a>
+                        </li>
+                {% endif %}
+                
+                {% for page_num in topics.paginator.page_range %}
+                        
+                        {% if topics.number == page_num %}
+                                <li class="page-item active bg-dark " style="width: 35px; text-align: center; color: white; display: flex; flex-direction: column;">
+                                        <p style="justify-content: center; width: 100%;flex-direction: column; height: 100%; text-decoration: none;">{{page_num}}</p>
+                                        
+                                        
+                                        {% comment %} <span>(current)</span> {% endcomment %}
+                                </li>
+                        {% else %}
+                                <li class="page-item ">
+                                        {% comment %} {{page_num}} {% endcomment %}
+                                        <a href="?page={{page_num}}" class="page-link">{{page_num}}</a>
+                                </li>
+
+                        {% endif %}
+                                
+                {% endfor %}
+                        
+
+                {% if topics.has_next %}
+                        <li class="page-item">
+                                <a href="?page={{topics.next_page_number}}" class="page-link">Next</a>
+                        </li>
+                {% else %}
+                        <li class="page-item disabled " style="border: 1px solid #ddd; padding-right: 7px; padding-left: 7px; border-top-right-radius: 4px; border-bottom-right-radius: 4px;">
+                                <span>Next</span>
+                        </li>
+                {% endif %}
+                        
+                
+        </ul>
+</div>
+{% endblock%}
