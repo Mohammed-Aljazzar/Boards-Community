@@ -44,8 +44,11 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'boards',
     'accounts',
+    'crispy_forms',
 
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+# CRISPY_TEMPLATE_PACK = 'uni_form'
 ADMIN_INTERFACE = {
     'header': 'My Admin Panel',  # Custom header
     'theme': 'light',              # Available options: 'default', 'dark', 'light'
@@ -150,3 +153,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'boards:home'
 
 LOGIN_URL = 'accounts:login'
+

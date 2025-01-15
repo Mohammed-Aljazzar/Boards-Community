@@ -1,4 +1,50 @@
 {% extends 'base.html' %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+{% block title%} My Account {%endblock title%}
+{% block breadcrumb%}
+        <li class="breadcrumb-item active" style="margin-left: 8px;">My Account</li>
+{%endblock%}
+{% block content%}
+{% if user.profile.profile_picture %}
+    <div style="width:200px; height:200px; border-radius:50%" class="mt-5 mb-2">
+
+        <img src="{{user.profile.profile_picture.url}}" alt="" class="w-100 d-block " style="border-radius: 50%;">
+    </div>
+{% endif %}
+<form action="" method="POST" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    {% comment %} <div class="form-group">
+        <label for="">Username:</label>
+        {{user_form.username}}
+    </div>
+    <div class="form-group">
+        <label for="">First Name:</label>
+        {{user_form.first_name}}
+    </div>
+    <div class="form-group">
+        <label for="">Last Name:</label>
+        <div class="control-form w-100">{{user_form.last_name}}</div>
+        
+    </div> {% endcomment %}
+    {% comment %} <div class="form-group">
+        <label for="">Profile Picture:</label>
+        {{profile_form.profile_picture}}
+    </div> {% endcomment %}
+    <button type="submit" class="btn btn-success mt-4 mb-4"> Save Changes</button>
+</form>
+
+{% comment %} {% if user.profile.profile_picture %}
+    <div style="width:200px; height:200px" class="mt-5">
+
+        <img src="{{user.profile.profile_picture.url}}" alt="" class="w-100 d-block">
+    </div>
+{% endif %} {% endcomment %}
+    
+{% endblock%}
+
+{% comment %} {% extends 'base.html' %}
 {% load widget_tweaks %}
 
 {% block title%} My Account {%endblock title%}
@@ -11,4 +57,4 @@
         {% include "includes/form.html" %}
         <button type="submit" class="btn btn-success mt-4"> Save Changes</button>
     </form>
-{% endblock%}
+{% endblock%} {% endcomment %}
